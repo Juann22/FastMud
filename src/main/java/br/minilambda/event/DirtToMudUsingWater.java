@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 
 public class DirtToMudUsingWater implements Listener {
@@ -47,4 +48,34 @@ public class DirtToMudUsingWater implements Listener {
         }
     }
 
+    @EventHandler
+    public void onWaterFlow(BlockFromToEvent event) {
+        /*
+         * When water flows.
+         */
+        // From block.
+        Block block = event.getBlock();
+        // To block.
+        Block toBlock = event.getToBlock();
+
+        // Exit if block type is different of water.
+        if(block.getType() != Material.WATER) {
+            return;
+        }
+
+        // Getting bottom block.
+        Block bottomBlock = toBlock.getWorld().getBlockAt(
+            toBlock.getX(),
+            toBlock.getY() - 1,
+            toBlock.getZ())
+        ;
+
+        // Exit if bottom block is different of dirt.
+        if(bottomBlock.getType() != Material.DIRT){
+            return;
+        }
+
+        // Set bottom block type to mud block.
+        bottomBlock.setType(Material.MUD);
+    }
 }

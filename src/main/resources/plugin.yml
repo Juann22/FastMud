@@ -1,0 +1,5 @@
+name: FastMud
+main: br.minilambda.FastMud
+version: 1.0.0
+author: d3cryptofc
+api-version: 1.19

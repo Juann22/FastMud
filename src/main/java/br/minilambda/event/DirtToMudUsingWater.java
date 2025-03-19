@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 
 public class DirtToMudUsingWater implements Listener {
@@ -77,5 +78,25 @@ public class DirtToMudUsingWater implements Listener {
 
         // Set bottom block type to mud block.
         bottomBlock.setType(Material.MUD);
+    }
+
+    @EventHandler
+    public void onBlockPlaceUnderWater(BlockPlaceEvent event){
+        /*
+         * When block is placed under water.
+         */
+        // Getting block placed.
+        Block block = event.getBlock();
+        // Getting top block.
+        Block topBlock = block.getWorld().getBlockAt(
+            block.getX(),
+            block.getY() + 1,
+            block.getZ()
+        );
+
+        // If block type is dirt and top block is water, set block type to mud.
+        if(block.getType() == Material.DIRT && topBlock.getType() == Material.WATER){
+            block.setType(Material.MUD);
+        }
     }
 }

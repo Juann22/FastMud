@@ -87,6 +87,12 @@ public class DirtToMudUsingWater implements Listener {
          */
         // Getting block placed.
         Block block = event.getBlock();
+
+        // Exit if block is different of dirt.
+        if(block.getType() != Material.DIRT){
+            return;
+        }
+
         // Getting top block.
         Block topBlock = block.getWorld().getBlockAt(
             block.getX(),
@@ -94,9 +100,12 @@ public class DirtToMudUsingWater implements Listener {
             block.getZ()
         );
 
-        // If block type is dirt and top block is water, set block type to mud.
-        if(block.getType() == Material.DIRT && topBlock.getType() == Material.WATER){
-            block.setType(Material.MUD);
+        // Exit if top block is water.
+        if(topBlock.getType() != Material.WATER){
+            return;
         }
+
+        // Set block type to mud.
+        block.setType(Material.MUD);
     }
 }

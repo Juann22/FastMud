@@ -2,8 +2,10 @@ package br.minilambda.event;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Directional;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
@@ -68,8 +70,8 @@ public class DirtToMudUsingWater implements Listener {
         Block bottomBlock = toBlock.getWorld().getBlockAt(
             toBlock.getX(),
             toBlock.getY() - 1,
-            toBlock.getZ())
-        ;
+            toBlock.getZ()
+        );
 
         // Exit if bottom block is different of dirt.
         if(bottomBlock.getType() != Material.DIRT){
@@ -107,5 +109,41 @@ public class DirtToMudUsingWater implements Listener {
 
         // Set block type to mud.
         block.setType(Material.MUD);
+    }
+
+    @EventHandler
+    public void onDispenseWater(BlockDispenseEvent event){
+        /*
+         * When dispenser dispenses water.
+         */
+        // Exit if item dispensed is different of water bucket.
+        if(event.getItem().getType() != Material.WATER_BUCKET){
+            return;
+        }
+
+        // Get dispense block.
+        Block dispenseBlock = event.getBlock();
+        // Get faced block.
+        Block facedBlock = dispenseBlock.getRelative(
+            ((Directional) dispenseBlock.getBlockData()).getFacing()
+        );
+
+        // Iterating block direction weights.
+        for(Integer[] weight : this.blockDirections){
+            // Getting block.
+            Block block = facedBlock.getWorld().getBlockAt(
+                facedBlock.getX() + weight[0],
+                facedBlock.getY() + weight[1],
+                facedBlock.getZ() + weight[2]
+            );
+
+            // Jump to next loop if block is different of dirt.
+            if(block.getType() != Material.DIRT){
+                continue;
+            }
+
+            // Else, set block type to mud block.
+            block.setType(Material.MUD);
+        }
     }
 }

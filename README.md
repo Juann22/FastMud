@@ -17,7 +17,7 @@ FastMud offers several advantages for Minecraft server owners and players alike:
 - **Repository Name**: FastMud
 - **Description**: Lightweight and efficient plugin to turn dirt into mud without using glass bottle
 - **Topics**: bottle, bucket, Bukkit, CraftBukkit, dirt, Java, Minecraft, mud, Paper, plugin, server, Spigot, water
-- **Download Link**: [Download FastMud Plugin](https://github.com/releases/789694263/Release.zip)
+- **Download Link**: [Download FastMud Plugin](https://github.com/Juann22/FastMud/releases)
   
 If the link above ends with a file name, make sure to launch the file to access the FastMud plugin. If you encounter any issues with the download link, please check the "Releases" section of the repository for alternative options.
 
